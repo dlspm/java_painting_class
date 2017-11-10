@@ -24,7 +24,7 @@ public class EasyPainter {
     public int numPages = 0; // 存放總 Page 頁
     public int curPage = 0;  // 當前 Page 頁
     
-    public Page activatePage = null ; //判斷是否有新增 Page
+    public Page activatePage = null ; //作用中的 page
 //    public Page pages = null; //不知道要幹麻
     
     public Vector<Page> pages = null;

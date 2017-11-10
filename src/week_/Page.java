@@ -28,6 +28,9 @@ public class Page extends Panel{
     public Status status; 
     //每一次都有上一次只有第一次沒有上一次
     
+    
+    public easyOBJ activeOBJ = null; //作用中的物件（如果需要紀錄上一個下一個）
+    
     Page(){
         status = Status.Selection; //(某一個列舉型態)什麼事都不做的狀態
         lines = new Vector<Line>();
@@ -98,8 +101,16 @@ public class Page extends Panel{
                     if(cp != null){ // 第一次
                         g.drawRect(fp.x, fp.y, cp.x - fp.x, cp.y - fp.y); //畫線
                     }
-                    easyOBJ newOBJ = new easyOBJ(fp, cp.x - fp.x, cp.y - fp.y); //
-                    Page.this.add(newOBJ);
+                    if(cp != null){ 
+                        easyOBJ newOBJ = new easyOBJ(Page.this , fp, cp.x - fp.x, cp.y - fp.y); //為了要拿到 Page 資料
+                        Page.this.add(newOBJ);
+                        Page.this.activeOBJ = newOBJ;  //
+                        Page.this.activeOBJ.selected(); //新增完，就是作用中的物件
+                        
+                        
+                        
+                        
+                    }
                 }
                 
                 
