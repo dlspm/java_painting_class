@@ -29,8 +29,18 @@ public class SelectionOutline {
             //1. 需要先知道物件在哪裡, 有大小多大
             
             Graphics g = parent.parent.getGraphics();
-            g.setColor(Color.red);
+//            g.setColor(Color.red);
+            g.setXORMode(Color.yellow);
+            //兩個向量寬,高
+            Dimension d = parent.getSize();
+            Point p = parent.getLocation();
             
+            g.drawRect(p.x-deltaSize, p.y-deltaSize, d.width+deltaSize * 2-1, d.height+deltaSize * 2-1);
+        
+        }else{
+            Graphics g = parent.parent.getGraphics();
+//            g.setColor(Color.red);
+            g.setXORMode(Color.yellow);
             //兩個向量寬,高
             Dimension d = parent.getSize();
             Point p = parent.getLocation();
@@ -38,9 +48,6 @@ public class SelectionOutline {
             g.drawRect(p.x-deltaSize, p.y-deltaSize, d.width+deltaSize * 2-1, d.height+deltaSize * 2-1);
         
             
-            
-        }else{
-        
         
         }
     

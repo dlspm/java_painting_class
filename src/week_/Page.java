@@ -84,6 +84,14 @@ public class Page extends Panel{
                 else if(Page.this.status == Status.CreatingOBJ){
                     fp = e.getPoint();
                 }
+                if(Page.this.activeOBJ != null ){ //如果現在的 Page 是否有 activeOBJ 
+                    if(Page.this.activeOBJ.status == Status.Activated){ //做狀態轉移
+                        
+                        Page.this.activeOBJ.outline.setVisible(false);
+                        Page.this.activeOBJ.status = Status.Inactivated;
+                        Page.this.activeOBJ = null;
+                    }
+                }
                 
                 
             }
@@ -105,11 +113,9 @@ public class Page extends Panel{
                         easyOBJ newOBJ = new easyOBJ(Page.this , fp, cp.x - fp.x, cp.y - fp.y); //為了要拿到 Page 資料
                         Page.this.add(newOBJ);
                         Page.this.activeOBJ = newOBJ;  //
-                        Page.this.activeOBJ.selected(); //新增完，就是作用中的物件
-                        
-                        
-                        
-                        
+                        cp = null; //不然會出現小框框
+                        //不用做了因為在 easyOBJ 裡面就可以設定 outline
+//                        Page.this.activeOBJ.selected(); //新增完，就是作用中的物件
                     }
                 }
                 

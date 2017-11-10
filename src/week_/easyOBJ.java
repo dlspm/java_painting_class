@@ -17,16 +17,40 @@ public class easyOBJ extends Panel{
     SelectionOutline outline = null;
     //每一個
     
+    Status status;
     
     easyOBJ(Page p, Point sp, int w, int h){
+        
+        status = Status.Activated; //設定狀態
+        
+        
+        
         parent = p;
         this.setSize(w,h);
         this.setLocation(sp);
 //        this.setBackground(Color.red);
 
+
+        this.outline = new SelectionOutline(this);  //美新增一個物件就會
+        this.outline.setVisible(true);
+        
+
         this.addMouseListener(new MouseAdapter(){ //針對各式各樣的滑鼠動作
             public void mousePressed(MouseEvent e){
                 System.out.println("mousePressed in easyObJ");
+                if(status == Status.Inactivated){//有作用中的物件存在
+                    
+                    
+                        if(parent.activeOBJ != null){
+                            parent.activeOBJ.outline.setVisible(false);
+                        }
+                        
+                        outline.setVisible(true);
+                        status = Status.Activated;
+
+                        parent.activeOBJ = easyOBJ.this; //當從 inactivated 回到 activted 要更改的
+                    }
+                }
             }
             
             public void mouseReleased(MouseEvent e){
