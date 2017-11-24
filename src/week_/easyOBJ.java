@@ -6,6 +6,7 @@
 package week_;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 
 /**
  *
@@ -16,7 +17,7 @@ public class easyOBJ extends Panel {
     Page parent;
     SelectionOutline outline=null;
     Status status;
-    Point op,fp,cp;
+    Point op,fp,cp,lp;
     Dimension d;
     
     easyOBJ(Page p, Point sp, int w, int h)
@@ -27,7 +28,7 @@ public class easyOBJ extends Panel {
         this.setLocation(sp);
         this.outline = new SelectionOutline(this);
         this.outline.setVisible(true);
-        
+        this.setBackground(Color.red);
         
 //        this.setBackground(Color.red);
 
@@ -35,15 +36,26 @@ public class easyOBJ extends Panel {
         {
             public void mouseDragged(MouseEvent e)
             {
-                     Graphics g = parent.getGraphics();
-                     g.setXORMode(Color.yellow);
-                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
-                                d.width+1, d.height+1);
-                     
-                     cp = e.getPoint();
-                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
-                                d.width+1, d.height+1);
-                     
+//                     Graphics g = parent.getGraphics();
+//                     g.setXORMode(Color.yellow);
+//                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
+//                                d.width+1, d.height+1);
+//                     
+//                     cp = e.getPoint();
+//                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
+//                                d.width+1, d.height+1);
+                if(cp == null)
+                    cp = new Point();
+                cp.x = e.getXOnScreen();
+                cp.y = e.getYOnScreen();
+                
+                op.x = op.x + (cp.x-lp.x);
+                op.y = op.y + (cp.y-lp.y);
+                //比對位移了多少
+                easyOBJ.this.setLocation(op);
+                
+                lp.x = cp.x;
+                lp.y = cp.y;
 
             }
         }
@@ -67,20 +79,26 @@ public class easyOBJ extends Panel {
                  }
                  else if(status==Status.Activated)
                  {
-                     setVisible(false);
+//                     setVisible(false);
                      outline.setVisible(false);
                      
-                     Graphics g = parent.getGraphics();
-                     g.setXORMode(Color.yellow);
-                     
-                     fp = e.getPoint();
-                     op = easyOBJ.this.getLocation();
-                     d = easyOBJ.this.getSize();
-                     System.out.println(fp.toString());
-                     System.out.println(d.toString());
-                     g.drawRect(op.x-1, op.y-1, d.width+1, d.height+1);
+//                     Graphics g = parent.getGraphics();
+//                     g.setXORMode(Color.yellow);
+//                   
+                    if(lp == null)
+                        lp = new Point();
+                    
+                    lp.x = e.getXOnScreen();
+                    lp.y = e.getYOnScreen();
+                    
+//                     fp = e.getPoint();
+                    op = easyOBJ.this.getLocation();
+//                     d = easyOBJ.this.getSize();
+//                     System.out.println(fp.toString());
+//                     System.out.println(d.toString());
+//                     g.drawRect(op.x-1, op.y-1, d.width+1, d.height+1);
                     //g.drawRect(100,100,300,300);
-                     cp=fp;
+//                     cp=fp;
                      
                      parent.status=Status.MovingOBJ;
                      status=Status.Moving;
@@ -92,15 +110,15 @@ public class easyOBJ extends Panel {
                  System.out.println("mouse released in easyOBJ");
                  if(status==Status.Moving)
                  {
-                     Graphics g = parent.getGraphics();
-                     g.setXORMode(Color.yellow);
-                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
-                                d.width+1, d.height+1);
-                     
-                     setLocation(op.x+(cp.x-fp.x), op.y+(cp.y-fp.y));
-                     
-                     
-                     setVisible(true);
+//                     Graphics g = parent.getGraphics();
+//                     g.setXORMode(Color.yellow);
+//                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
+//                                d.width+1, d.height+1);
+//                     
+//                     setLocation(op.x+(cp.x-fp.x), op.y+(cp.y-fp.y));
+//                     
+//                     
+//                     setVisible(true);
                      outline.setVisible(true);
                      status=Status.Activated;
                  }

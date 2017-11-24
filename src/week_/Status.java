@@ -10,4 +10,6 @@ package week_;
  * @author junwu
  */
 public enum Status {Drawing, Selection, CreatingOBJ, 
-                    Activated, Inactivated, Moving, MovingOBJ}
+                    Activated, Inactivated, Moving, MovingOBJ
+                    ,Ready2Resize , Resizing
+}
