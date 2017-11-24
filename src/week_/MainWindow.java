@@ -3,50 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week_;
-
+package easypainter;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;  //ImageIcon
 
 /**
  *
- * @author angus
+ * @author junwu
  */
-public class MainWindow extends JFrame{  //用extends 去繼承 Frame
-    //呈現視窗裡面的一些內容(功能表)
-    
-    MainWindow(EasyPainter ep){
-            
-            this.setLocation(400, 30);
-            this.setSize(600, 500);
-            this.setBackground(Color.white);
-            this.setTitle(ep.swTitle + " version " + ep.version);
-            this.setLayout(new BorderLayout()); //可有可無
-//            Label label = new Label("JLabel");
-//            this.getContentPane().add(BorderLayout.CENTER , label);
-            
-            
-            //關閉的語法
-            this.addWindowListener(new WindowAdapter(){
-                public void windowClosing(WindowEvent e){
-                    System.exit(0);
-                }
+public class MainWindow extends Frame {
+    MainWindow(EasyPainter ep)
+    {
+        this.setBackground(Color.yellow);
+        this.setSize(600, 500);
+        this.setLocation(100, 100);
 
-            });
-                  
-            this.setVisible(true);
-           
+        this.setTitle(ep.swTitle + " version " + ep.version);
+
+        this.setLayout(new BorderLayout());
+       // this.setVisible(true);
+        this.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                System.exit(0);
+            }
+        });
     }
     
-    //新增工具列
-    void setToolBar(ToolBar tb){        
-        this.add(tb, BorderLayout.SOUTH);        
+    void setMessageBar(MessageBar mb)
+    {
+        this.add(mb, BorderLayout.SOUTH);
     }
     
-    //訊息通知列
-    void setMessageBar(MessageBar mb){
-        this.add(mb, BorderLayout.NORTH);
+    void setToolBar(ToolBar tb)
+    {
+        this.add(tb,BorderLayout.NORTH);
     }
-         
 }

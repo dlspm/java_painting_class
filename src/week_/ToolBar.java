@@ -3,172 +3,101 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week_;
+package easypainter;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+
 /**
  *
- * @author angus
+ * @author junwu
  */
-public class ToolBar extends Panel{
-    ToolBar(EasyPainter ep){ //工具列
-        
-        this.setBackground(Color.lightGray);
+public class ToolBar extends Panel {
+    ToolBar(EasyPainter ep)
+    {
+        this.setBackground(Color.red);
         this.setLayout(new FlowLayout());
-//        ep.activatePage = new Page();
-//        ep.pages.add(ep.activatePage);
-//        ep.mainWin.add(ep.activatePage, BorderLayout.CENTER);  //在中間
-
-        Button previousPageBtn = new Button("上一頁");
-        previousPageBtn.setVisible(false);
-        Button nextPageBtn = new Button("下一頁");
-        nextPageBtn.setVisible(false);
-        Button newPageBtn = new Button("nwe Page");
-//        newPageBtn.setVisible(false);
-        Button penPageBtn = new Button("Pen");
-        penPageBtn.setVisible(false);
-        Button selectBtn = new Button("Selection");
-        selectBtn.setVisible(false);
-        
-        
-
-
-        Button startBtn = new Button("Start");
-        this.add(startBtn);
-        startBtn.setVisible(false);
-        startBtn.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-//                previousPageBtn.setVisible(false);
-//                nextPageBtn.setVisible(false);
-                ep.activatePage = new Page();
+        Button newPageBtn = new Button("New Page");
+        this.add(newPageBtn);
+        newPageBtn.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
                 
-                ep.activatePage.add(new Label("Wssssssel"));
-                ep.pages.add(ep.activatePage);
+                if(ep.activePage!=null)
+                {
+                    ep.mainWin.remove(ep.activePage);
+                }
                 
+                ep.activePage = new Page();
                 
-                ep.mainWin.add(ep.activatePage, BorderLayout.CENTER);  //在中間
-                startBtn.setVisible(false);
-                newPageBtn.setVisible(true);
+                ep.pages.add(ep.activePage);
                 
+                ep.mainWin.add(ep.activePage, BorderLayout.CENTER);
+                //ep.mainWin.setVisible(false);
                 ep.mainWin.setVisible(true);
                 
-                
+                ep.numPages++;
+                ep.curPage++;
+                ep.megBar.updateInfo(ep.curPage, ep.numPages);
                 
                 
             }
         });
         
-        
-        
-        this.add(newPageBtn);
-        newPageBtn.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                
-//                if(ep.numPages < ep.activatePage.pageColors.length){
-                if(ep.numPages < 8){
-                    if (ep.numPages == 0){
-                        previousPageBtn.setVisible(true);
-                        nextPageBtn.setVisible(true);
-                        penPageBtn.setVisible(true);
-                        selectBtn.setVisible(true);
-                    }
-                    
-                    if (ep.activatePage != null )
-                           ep.mainWin.remove(ep.activatePage); //當新增過後時就要先 remove
+        Button prevPageBtn = new Button("Previous Page");
+        this.add(prevPageBtn);
+        prevPageBtn.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                ep.mainWin.remove(ep.activePage);
+                ep.activePage = ep.pages.elementAt(ep.pages.indexOf(ep.activePage)-1);
+                ep.mainWin.add(ep.activePage);
+                ep.megBar.updateInfo(--ep.curPage, ep.numPages);
+            }
+        });
 
-                    ep.activatePage = new Page();
-                    ep.pages.add(ep.activatePage);
-                    
-                    ep.mainWin.add(ep.activatePage, BorderLayout.CENTER);  //在中間
-                       //到這裡結束會因為畫面沒有更新導致畫面重疊
-                    
-                    if(ep.numPages == ep.curPage){
-                        ep.numPages++ ;
-                        ep.curPage++ ;
-                    }else{
-                        ep.curPage = ++ep.numPages ;
-                    }
-                    ep.megBar.updateInfo(ep.curPage, ep.numPages);
-                    ep.mainWin.setVisible(true);
-                    
+        Button penBtn = new Button("Pen");
+        this.add(penBtn);
+        penBtn.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                System.out.println("pen tool selected");
+                if(ep.activePage!=null)
+                {
+                    ep.activePage.status = Status.Drawing;
                 }
             }
         });
-        
-        
-        
-        //上一頁
-//        Button previousPageBtn = new Button("上一頁");
-//        previousPageBtn.setVisible(false);
-        this.add(previousPageBtn);
-        previousPageBtn.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-            
-                if (ep.curPage > 1){                    
-                    ep.mainWin.remove(ep.activatePage);
-                    ep.activatePage = ep.pages.elementAt(ep.pages.indexOf(ep.activatePage)-1);
-                    ep.mainWin.add(ep.activatePage);
-                    ep.megBar.updateInfo(--ep.curPage, ep.numPages);
-                    System.out.println(ep.curPage + "|" + ep.numPages);
-                }
-            }
-        });
-        
-        
-        //下一頁
-//        Button nextPageBtn = new Button("下一頁");
-//        nextPageBtn.setVisible(false);
-        this.add(nextPageBtn);
-        nextPageBtn.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-            
-                if (ep.curPage < ep.numPages ){
-                    
-                    ep.mainWin.remove(ep.activatePage);
-                    ep.activatePage = ep.pages.elementAt(ep.pages.indexOf(ep.activatePage)+1);
-                    ep.mainWin.add(ep.activatePage, BorderLayout.CENTER);
-                    ep.megBar.updateInfo(++ep.curPage, ep.numPages);
-                    System.out.println(ep.curPage + "|" + ep.numPages);
-                }
-            }
-        });
-        
-//        Button penPageBtn = new Button("Pen");
-//        penPageBtn.setVisible(true);
-        this.add(penPageBtn);
-        penPageBtn.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                
-                if(ep.activatePage != null){
-                    ep.activatePage.status = Status.Drawingm ;
-                }
-            }
-        });
-        
-        
+
+        Button selectBtn = new Button("Selection");
         this.add(selectBtn);
-        selectBtn.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                if(ep.activatePage != null){
-                    ep.activatePage.status = Status.Selection ;
+        selectBtn.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                if(ep.activePage!=null)
+                {
+                    ep.activePage.status = Status.Selection;
                 }
             }
         });
+
         
-        
-        
-        Button creatOBJBtn = new Button("CreatOBJBtn");
+        Button creatOBJBtn = new Button("Creat Object");
         this.add(creatOBJBtn);
-        creatOBJBtn.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent e){
-                
-                if(ep.activatePage != null){
-                    ep.activatePage.status = Status.CreatingOBJ ;
+        creatOBJBtn.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                if(ep.activePage!=null)
+                {
+                    ep.activePage.status = Status.CreatingOBJ;
                 }
             }
         });
+
         
-    
     }
 }

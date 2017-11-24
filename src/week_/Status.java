@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week_;
+package easypainter;
 
 /**
  *
- * @author angus
+ * @author junwu
  */
-public enum Status {
-    Inactivated ;
-    Activated ;
-    
-}
+public enum Status {Drawing, Selection, CreatingOBJ, 
+                    Activated, Inactivated, Moving, MovingOBJ}

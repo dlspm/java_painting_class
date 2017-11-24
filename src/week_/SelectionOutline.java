@@ -3,55 +3,54 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week_;
+package easypainter;
 
 import java.awt.*;
 import java.awt.event.*;
-
-//當選下物件時，顯示物件外框
-
+/**
+ *
+ * @author junwu
+ */
 public class SelectionOutline {
-    
-    int deltaSize = 8;
-    
+    int deltaSize=8;
     easyOBJ parent;
+    Panel Ecp, Wcp, Scp, Ncp, NEcp, SEco, NWcp, SWcp;
     
     
-    SelectionOutline(easyOBJ p){  //因為是在 easyOBJ 呼叫 SelectionOutline，所以會傳入的 this 是 easyOBJ 型態
+    SelectionOutline(easyOBJ p)
+    {
         parent = p;
+        Ecp=new Panel();
+        Ecp.setBackground(Color.red);
+        Ecp.setSize(deltaSize,deltaSize);
+        Ecp.setVisible(false);
+        parent.parent.add(Ecp);
     }
     
-    
-    public void setVisible(boolean b){
-    
-        if(b){
-            //在 Page 裡面畫框
-            //1. 需要先知道物件在哪裡, 有大小多大
-            
+    public void setVisible(boolean b)
+    {
+        if(b)
+        {
             Graphics g = parent.parent.getGraphics();
-//            g.setColor(Color.red);
             g.setXORMode(Color.yellow);
-            //兩個向量寬,高
-            Dimension d = parent.getSize();
-            Point p = parent.getLocation();
-            
-            g.drawRect(p.x-deltaSize, p.y-deltaSize, d.width+deltaSize * 2-1, d.height+deltaSize * 2-1);
-        
-        }else{
-            Graphics g = parent.parent.getGraphics();
-//            g.setColor(Color.red);
-            g.setXORMode(Color.yellow);
-            //兩個向量寬,高
-            Dimension d = parent.getSize();
-            Point p = parent.getLocation();
-            
-            g.drawRect(p.x-deltaSize, p.y-deltaSize, d.width+deltaSize * 2-1, d.height+deltaSize * 2-1);
-        
-            
-        
+            Dimension d=parent.getSize();
+            Point p=parent.getLocation();
+            g.drawRect(p.x-deltaSize, p.y-deltaSize, 
+                       d.width+2*deltaSize-1, d.height+2*deltaSize-1);
+            Ecp.setLocation(p.x+d.width-1+deltaSize-deltaSize/2,
+                            p.y+d.height/2-1-deltaSize/2);
+            Ecp.setVisible(true);
         }
-    
-    
+        else
+        {
+            Graphics g = parent.parent.getGraphics();
+            g.setXORMode(Color.yellow);
+            Dimension d=parent.getSize();
+            Point p=parent.getLocation();
+            g.drawRect(p.x-deltaSize, p.y-deltaSize, 
+                       d.width+2*deltaSize-1, d.height+2*deltaSize-1);
+            Ecp.setVisible(false);
+        }
     }
     
 }

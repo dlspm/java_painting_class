@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week_;
-
-import java.awt.Point;
+package easypainter;
+import java.awt.*;
 
 /**
  *
- * @author angus
+ * @author junwu
  */
 public class Line {
-    Point sp;
-    Point ep;
-
-    Line(Point s, Point e) {
-        sp = s;
-        ep = e;
+    
+    Point sp, ep;
+    Line(Point s,Point e)
+    {
+        sp=s;
+        ep=e;
     }
-    
-    
 }

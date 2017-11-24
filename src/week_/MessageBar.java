@@ -3,34 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week_;
+package easypainter;
 
-import java.awt.*; 
+import java.awt.*;
 import java.awt.event.*;
-
-
-
-//Label在awt裡面
 
 /**
  *
- * @author angus
+ * @author junwu
  */
-public class MessageBar extends Panel{
-    Label pageInfo = new Label();  //因為updateInfo也要用
-    
-    MessageBar(EasyPainter ep){
+public class MessageBar extends Panel {
+   
+    Label pageInfo;
+    MessageBar(EasyPainter ep)
+    {
         this.setLayout(new FlowLayout());
         this.setBackground(Color.lightGray);
-        
-        this.updateInfo(ep.curPage, ep.numPages); //更新訊息框的 page 數
+        pageInfo = new Label();
+        this.updateInfo(ep.curPage, ep.numPages);
+//        pageInfo=new Label("[" + ep.curPage + "/" + ep.numPages + "]");
         this.add(pageInfo);
-                
+        
     }
     
-    void updateInfo(int cp, int np){  // 只要按一次就要更新
+    void updateInfo(int cp, int np)
+    {
         pageInfo.setText("[" + cp + "/" + np + "]");
-    
     }
-       
 }

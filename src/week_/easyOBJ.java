@@ -3,78 +3,128 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week_;
+package easypainter;
 import java.awt.*;
 import java.awt.event.*;
 
-
 /**
  *
- * @author angus
+ * @author junwu
  */
-public class easyOBJ extends Panel{
+public class easyOBJ extends Panel {
+    
     Page parent;
-    SelectionOutline outline = null;
-    //每一個
-    
+    SelectionOutline outline=null;
     Status status;
+    Point op,fp,cp;
+    Dimension d;
     
-    easyOBJ(Page p, Point sp, int w, int h){
-        
-        status = Status.Activated; //設定狀態
-        
-        
-        
+    easyOBJ(Page p, Point sp, int w, int h)
+    {
+        status=Status.Activated;
         parent = p;
         this.setSize(w,h);
         this.setLocation(sp);
-//        this.setBackground(Color.red);
-
-
-        this.outline = new SelectionOutline(this);  //美新增一個物件就會
+        this.outline = new SelectionOutline(this);
         this.outline.setVisible(true);
         
+        
+//        this.setBackground(Color.red);
 
-        this.addMouseListener(new MouseAdapter(){ //針對各式各樣的滑鼠動作
-            public void mousePressed(MouseEvent e){
-                System.out.println("mousePressed in easyObJ");
-                if(status == Status.Inactivated){//有作用中的物件存在
-                    
-                    
-                        if(parent.activeOBJ != null){
-                            parent.activeOBJ.outline.setVisible(false);
-                        }
-                        
-                        outline.setVisible(true);
-                        status = Status.Activated;
+        this.addMouseMotionListener(new MouseAdapter()
+        {
+            public void mouseDragged(MouseEvent e)
+            {
+                     Graphics g = parent.getGraphics();
+                     g.setXORMode(Color.yellow);
+                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
+                                d.width+1, d.height+1);
+                     
+                     cp = e.getPoint();
+                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
+                                d.width+1, d.height+1);
+                     
 
-                        parent.activeOBJ = easyOBJ.this; //當從 inactivated 回到 activted 要更改的
-                    }
-                }
             }
-            
-            public void mouseReleased(MouseEvent e){
-                System.out.println("mouseReleased in easyObJ");
-            }
+        }
+        );
+        this.addMouseListener(new MouseAdapter()
+        {
+             public void mousePressed(MouseEvent e)
+             {
+                 System.out.println("mouse pressed in easyOBJ");
+                 if(status==Status.Inactivated)
+                 {
+                     if(parent.activeOBJ!=null)
+                     {
+                         parent.activeOBJ.outline.setVisible(false);
+                         parent.activeOBJ.status=Status.Inactivated;
+                     }
+                     
+                     outline.setVisible(true);
+                     status=Status.Activated;
+                     parent.activeOBJ=easyOBJ.this;
+                 }
+                 else if(status==Status.Activated)
+                 {
+                     setVisible(false);
+                     outline.setVisible(false);
+                     
+                     Graphics g = parent.getGraphics();
+                     g.setXORMode(Color.yellow);
+                     
+                     fp = e.getPoint();
+                     op = easyOBJ.this.getLocation();
+                     d = easyOBJ.this.getSize();
+                     System.out.println(fp.toString());
+                     System.out.println(d.toString());
+                     g.drawRect(op.x-1, op.y-1, d.width+1, d.height+1);
+                    //g.drawRect(100,100,300,300);
+                     cp=fp;
+                     
+                     parent.status=Status.MovingOBJ;
+                     status=Status.Moving;
+                 }
+             }
+             
+             public void mouseReleased(MouseEvent e)
+             {
+                 System.out.println("mouse released in easyOBJ");
+                 if(status==Status.Moving)
+                 {
+                     Graphics g = parent.getGraphics();
+                     g.setXORMode(Color.yellow);
+                     g.drawRect(op.x-1+(cp.x-fp.x), op.y-1+(cp.y-fp.y),
+                                d.width+1, d.height+1);
+                     
+                     setLocation(op.x+(cp.x-fp.x), op.y+(cp.y-fp.y));
+                     
+                     
+                     setVisible(true);
+                     outline.setVisible(true);
+                     status=Status.Activated;
+                 }
+             }
         });
+
+
     }
     
-    public void selected(){  //選取物件
-        if(outline == null){
-        
-            outline = new SelectionOutline(this); //要把 Page 傳進去，不然沒辦法畫在 Page 上面
+    public void selected()
+    {
+        if(outline==null)
+        {
+            outline = new SelectionOutline(this);
         }
         outline.setVisible(true);
     }
     
-    
-    public void paint(Graphics g){  //記錄Line
-        
-        int x, y, w, h; 
-        w = (this.getSize()).width ;
-        h = (this.getSize()).height ;
-        g.setColor(Color.black);
-        
-        g.drawRect(0, 0, w-1, h-1); //100(0-99)
-    }
+    public void paint(Graphics g)
+    {
+      int w,h;
+      w = (this.getSize()).width;
+      h = (this.getSize()).height;
+      g.setColor(Color.black);
+      g.drawRect(0, 0, w-1, h-1);
+    } 
 }
