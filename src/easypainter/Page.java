@@ -79,7 +79,7 @@ public class Page extends Panel {
                     cp=null;
                 }
                 
-                if(Page.this.activeOBJ!=null)
+                if(Page.this.activeOBJ!=null) //當繪製完成後在 Page 上點擊空白部分
                 {
                     System.out.println("here");
                     if(Page.this.activeOBJ.status==Status.Activated)
@@ -108,10 +108,9 @@ public class Page extends Panel {
                         {
 //                            easyOBJ newOBJ = new easyOBJ(Page.this, fp,cp.x-fp.x, cp.y-fp.y );
                             Oval newOBJ = new Oval(Page.this, fp,cp.x-fp.x, cp.y-fp.y );
-                           // Button newOBJ = new Button("Ha");
                             Page.this.add(newOBJ);
                             Page.this.activeOBJ=newOBJ;
-                            Page.this.repaint();
+                            Page.this.repaint(); //繪製完後畫出框線
                         }
                         cp=null;
                     }
@@ -134,7 +133,7 @@ public class Page extends Panel {
         }
         
         if(this.activeOBJ!=null)
-        {
+        {// 畫出框線
             
             g.setXORMode(Color.yellow);
             Point p=activeOBJ.getLocation();

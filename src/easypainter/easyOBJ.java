@@ -20,7 +20,7 @@ public class easyOBJ extends Panel {
     Dimension d;
     
     easyOBJ(Page p, Point sp, int w, int h)
-    {
+    {// sp 是第一點
         super();
         status=Status.Activated;
         parent = p;
@@ -43,6 +43,7 @@ public class easyOBJ extends Panel {
                 //                d.width-1, d.height-1);
                 if(cp==null)
                    cp = new Point();
+                // getXOnScreen() 與 getYOnScreen() 印出在螢幕中點擊的座標
                 cp.x = e.getXOnScreen();
                 cp.y = e.getYOnScreen();
                 //     g.drawRect(op.x+(cp.x-fp.x), op.y+(cp.y-fp.y),
@@ -86,6 +87,7 @@ public class easyOBJ extends Panel {
                     // g.setXORMode(Color.yellow);
                      if(lp==null)
                          lp=new Point();
+                     // getXOnScreen() 與 getYOnScreen() 印出在螢幕中點擊的座標
                      lp.x = e.getXOnScreen();
                      lp.y = e.getYOnScreen();
                      op = easyOBJ.this.getLocation();
