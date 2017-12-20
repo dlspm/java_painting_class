@@ -53,7 +53,7 @@ public class Page extends Panel {
                 {
                     Graphics g = Page.this.getGraphics();
                     g.setXORMode(Color.red);
-                    if(cp!=null)
+                    if(cp!=null) // 為了不讓重疊
                     {
                         g.drawRect(fp.x, fp.y, cp.x - fp.x, cp.y -fp.y);
                     }
@@ -82,13 +82,16 @@ public class Page extends Panel {
                 if(Page.this.activeOBJ!=null) //當繪製完成後在 Page 上點擊空白部分
                 {
                     System.out.println("here");
+                    System.out.println(Page.this.status);
                     if(Page.this.activeOBJ.status==Status.Activated)
                     {
+                        System.out.println(Page.this.activeOBJ.status);
                         //Page.this.activeOBJ.outline.setVisible(false);
                         Page.this.activeOBJ.status=Status.Inactivated;
                         Page.this.activeOBJ=null;
                         Page.this.repaint();
                     }
+                    System.out.println(Page.this.status);
                 }
             }
             public void mouseReleased(MouseEvent e)
@@ -98,10 +101,10 @@ public class Page extends Panel {
                 {
                     Graphics g = Page.this.getGraphics();
                     g.setXORMode(Color.red);
-                    if(cp!=null)
-                    {
-                        g.drawRect(fp.x, fp.y, cp.x - fp.x, cp.y -fp.y);
-                    }
+//                    if(cp!=null)
+//                    {
+//                        g.drawRect(fp.x, fp.y, cp.x - fp.x, cp.y -fp.y);
+//                    }
                     if(cp!=null)
                     {   
                         if(((cp.x-fp.x)>10)&&((cp.y-fp.y)>10))
@@ -109,7 +112,7 @@ public class Page extends Panel {
 //                            easyOBJ newOBJ = new easyOBJ(Page.this, fp,cp.x-fp.x, cp.y-fp.y );
                             Oval newOBJ = new Oval(Page.this, fp,cp.x-fp.x, cp.y-fp.y );
                             Page.this.add(newOBJ);
-                            Page.this.activeOBJ=newOBJ;
+                            Page.this.activeOBJ=newOBJ; //不然 activeOBJ 會沒東西
                             Page.this.repaint(); //繪製完後畫出框線
                         }
                         cp=null;
@@ -134,7 +137,7 @@ public class Page extends Panel {
         
         if(this.activeOBJ!=null)
         {// 畫出框線
-            
+            System.out.println("Page paint");
             g.setXORMode(Color.yellow);
             Point p=activeOBJ.getLocation();
             Dimension d=activeOBJ.getSize();

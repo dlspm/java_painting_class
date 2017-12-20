@@ -14,7 +14,7 @@ import java.awt.event.*;
 public class easyOBJ extends Panel {
     
     Page parent;
-    SelectionOutline outline=null;
+//    SelectionOutline outline=null;
     Status status;
     Point op,lp=null,cp=null;
     Dimension d;
@@ -26,10 +26,10 @@ public class easyOBJ extends Panel {
         parent = p;
         this.setSize(w,h);
         this.setLocation(sp);
-       // this.outline = new SelectionOutline(this);
+//        this.outline = new SelectionOutline(this);
        // this.outline.setVisible(true);
         
-        
+        System.out.println("easyOBJ");
         
        // this.setBackground(Color.red);
 
@@ -41,6 +41,8 @@ public class easyOBJ extends Panel {
                 //g.setXORMode(Color.yellow);
                 //g.drawRect(op.x+(cp.x-fp.x), op.y+(cp.y-fp.y),
                 //                d.width-1, d.height-1);
+                System.out.println("easD" + parent.activeOBJ.status);
+                System.out.println("easD" + status);
                 if(cp==null)
                    cp = new Point();
                 // getXOnScreen() 與 getYOnScreen() 印出在螢幕中點擊的座標
@@ -65,7 +67,8 @@ public class easyOBJ extends Panel {
              {
                  System.out.println("mouse pressed in easyOBJ");
                  if(status==Status.Inactivated)
-                 {
+                 { //第一下先選擇才變 Activated
+//                    System.out.println("1" + parent.activeOBJ.status);
                      if(parent.activeOBJ!=null)
                      {
                        //  parent.activeOBJ.outline.setVisible(false);
@@ -74,12 +77,13 @@ public class easyOBJ extends Panel {
                      
                     // outline.setVisible(true);
                      status=Status.Activated;
-                     parent.activeOBJ=easyOBJ.this;
+                     parent.activeOBJ=easyOBJ.this; //更改物件
                      parent.repaint();
+                     System.out.println("1" + parent.activeOBJ.status);
                  }
                  else if(status==Status.Activated)
-                 {
-                     
+                 { //選到了知道第二次才開始移動
+                     System.out.println("2" + parent.activeOBJ.status);
                     // outline.setVisible(false);
                      //setVisible(false);
                      
@@ -102,6 +106,7 @@ public class easyOBJ extends Panel {
                      parent.status=Status.MovingOBJ;
                      status=Status.Moving;
                      //setVisible(false);
+                     System.out.println("2" + parent.activeOBJ.status);
                  }
              }
              
@@ -130,11 +135,11 @@ public class easyOBJ extends Panel {
     
     public void selected()
     {
-        if(outline==null)
-        {
-            outline = new SelectionOutline(this);
-        }
-        outline.setVisible(true);
+//        if(outline==null)
+//        {
+//            outline = new SelectionOutline(this);
+//        }
+//        outline.setVisible(true);
     }
    /* 
     public void paint(Graphics g)

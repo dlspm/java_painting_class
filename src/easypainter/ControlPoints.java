@@ -84,6 +84,7 @@ public class ControlPoints {
         {
             public void mouseDragged(MouseEvent e)
             {
+                System.out.println("Cont.."+parent.activeOBJ.status);
                 parent.activeOBJ.status = Status.Resizing;
                 if(p2==null)
                     p2 = new Point();
@@ -106,6 +107,7 @@ public class ControlPoints {
         {
             public void mousePressed(MouseEvent e)
             {
+                System.out.println("Cont.."+parent.activeOBJ.status);
                 old = parent.activeOBJ.status;
                 parent.activeOBJ.status = Status.Ready2Resize;
                 if(p1==null)

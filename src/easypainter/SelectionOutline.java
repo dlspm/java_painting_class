@@ -31,6 +31,7 @@ public class SelectionOutline {
         {
             public void mouseDragged(MouseEvent e)
             {
+                System.out.println("SEL.."+parent.status);
                 if((parent.status==Status.Ready2Resize)||(parent.status==Status.Resizing))
                 {              
                     if(cp==null)
@@ -39,9 +40,9 @@ public class SelectionOutline {
                     cp.y = e.getYOnScreen();
                     Dimension os=parent.getSize();
                     os.width+=(cp.x-lp.x);
-                    parent.outline.setVisible(false);
+//                    parent.outline.setVisible(false);
                     parent.setSize(os);
-                    parent.outline.setVisible(true);
+//                    parent.outline.setVisible(true);
                     parent.status=Status.Resizing;
                     lp.x=cp.x;
                     lp.y=cp.y;
@@ -53,6 +54,7 @@ public class SelectionOutline {
         {
             public void mousePressed(MouseEvent e)
             {
+                System.out.println("SEL.."+parent.status);
                 if(lp==null)
                     lp = new Point();
                 
@@ -63,6 +65,7 @@ public class SelectionOutline {
             
             public void mouseReleased(MouseEvent e)
             {
+                System.out.println("SEL.."+parent.status);
                 if((parent.status==Status.Resizing)||(parent.status==Status.Ready2Resize))
                 {
                     parent.status=Status.Activated;
