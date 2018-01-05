@@ -40,4 +40,8 @@ public class MainWindow extends Frame {
     {
         this.add(tb,BorderLayout.NORTH);
     }
+
+    void getRootPane(Page aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

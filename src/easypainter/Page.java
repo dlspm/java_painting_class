@@ -34,7 +34,10 @@ public class Page extends Panel {
         this.setLayout(null);
         status=Status.Selection;
         lines = new Vector<Line>();
+        
+//        this.getRootPane().setBackground(Color.red);
         this.setBackground(pageColors[id++]);
+        
         this.addMouseMotionListener( new MouseAdapter()
         {
             public void mouseDragged(MouseEvent e)
